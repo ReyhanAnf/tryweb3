@@ -46,6 +46,8 @@ jobs:
 
       - name: Build with Next.js
         run: bun run build
+        env:
+          NEXT_PUBLIC_OPENAI_API_KEY: ${{ vars.NEXT_PUBLIC_OPENAI_API_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
