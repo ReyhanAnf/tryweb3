@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Advanced Degen Meme Coin Analysis System
 
-## Getting Started
+A private, client-side, decision-support system for analyzing meme coins with deterministic risk scoring and AI auditing.
 
-First, run the development server:
+**Core Philosophy**: "Token = Guilty Until Proven Otherwise"
 
+## Features
+- **Deterministic Risk Scoring**: Weighted checklists (Liquidity, Contract, Holders, etc.)
+- **Token Identity & Verification**: Detailed metadata input with dynamic inline verification tools (DexScreener, Honeypot.is, etc.).
+- **AI Analysis**: Primary AI (Skeptical) + Secondary AI (Auditor) utilizing Token Identity context.
+- **Static Architecture**: Deployable to GitHub Pages (`output: export`)
+- **Privacy First**: No backend. Data stored in `IndexedDB`. API Key via Environment Variable.
+- **Security**: Local password protection (PBKDF2/SHA-256).
+
+## Setup & Run
+
+### Prerequisites
+- [Bun](https://bun.sh) (Required)
+- OpenAI API Key (Set in local `.env` as `NEXT_PUBLIC_OPENAI_API_KEY`)
+
+### Installation
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Development
+```bash
+bun dev
+```
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build for Production (GitHub Pages)
+```bash
+bun run build
+```
+The output will be in the `out/` directory.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Configuration
 
-## Learn More
+### Password Setup
+The default password hash corresponds to an unknown value (security by obscurity in this template, BUT YOU MUST CHANGE IT).
+The default `validHash` in `lib/auth.ts` is currently a placeholder.
 
-To learn more about Next.js, take a look at the following resources:
+**To set your own password:**
+1. Open the browser console on the Login page.
+2. Enter your desired password in the "Passphrase" field.
+3. Click "Initialize Session".
+4. Check the console logs for "Computed Hash for input: ...".
+5. Copy that hash string.
+6. Update `lib/auth.ts`:
+   ```typescript
+   storedHash: "YOUR_COPIED_HASH",
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Risk Thresholds
+Edit `config/risk.ts` to adjust:
+- High/Medium Risk Score Thresholds
+- Severity Multipliers
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Checklists
+Add or remove checks in `data/checklists/index.ts`.
 
-## Deploy on Vercel
+## Architecture
+- **Tech**: Next.js 16 (App Router), TailwindCSS, Shadcn UI Concepts.
+- **State**: React State + IndexedDB (`idb`).
+- **Auth**: PBKDF2 Hashing (Web Crypto API).
+- **AI**: Direct Client-to-OpenAI fetch.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+Private Use Only.
